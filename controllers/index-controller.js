@@ -1,10 +1,7 @@
 const axios = require('axios')
 
 const getAllPokemon = async (req, res, next) => {
-    let arrName = []
-    let arrPic = []
     let pokemons = []
-    let hasil
 
     try {
         await axios.get('https://pokeapi.co/api/v2/pokemon/')
@@ -33,7 +30,7 @@ const getAllPokemon = async (req, res, next) => {
 }
 
 const catchPokemon = (req, res, next) => {
-
+    
 }
 
 exports.getAllPokemon = getAllPokemon
