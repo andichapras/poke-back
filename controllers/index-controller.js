@@ -24,7 +24,7 @@ const getAllPokemon = async (req, res, next) => {
         .catch((error) => {
             console.log(error)
         })
-    } catch (err) {
+    } catch (error) {
         console.log(error)
     }
   
@@ -32,12 +32,12 @@ const getAllPokemon = async (req, res, next) => {
 }
 
 const getPokemonDetail = async (req, res, next) => {
-    const pokeid = req.params.pokeid
+    const pokeId = req.params.pokeid
 
     let pokemon = {}
 
     try {
-        await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeid}`)
+        await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeId}`)
         .then((response) => {
             const moves = []
             response.data.moves.map(m=> {
@@ -50,7 +50,7 @@ const getPokemonDetail = async (req, res, next) => {
             })
 
             pokemon = {
-                "pokemon": pokeid,
+                "pokemon": pokeId,
                 "types": types,
                 "moves": moves
             }
@@ -59,28 +59,39 @@ const getPokemonDetail = async (req, res, next) => {
             console.log(error)
         })
         
-    } catch (err) {
+    } catch (error) {
         console.log(error)
     }
     res.json({pokemon : pokemon})
 }
 
+const propCatchPokemon = () => {
+    return Math.random() < 0.5
+}
+
 const catchPokemon = async (req, res, next) => {
-    const { nickname } = req.body
+    const { name } = req.body
     const pokeId = req.params.pokeid
 
-    const catchPokemon = new Pokemon({
-        pokemon: pokeId,
-        name: nickname
-    })
-    console.log(nickname)
+    const prob = propCatchPokemon()
+     if (prob === true) {
+        const catchPokemon = new Pokemon({
+            pokemon: pokeId,
+            name,
+            rename: 0
+        })
+    
+        try {
+            await catchPokemon.save()
+        } catch (error) {
+            console.log(error)
+        }
+        res.json({pokemon: catchPokemon})
+     } else {
+         res.json({ message: 'Sorry you failed to catch '+pokeId })
+     }
 
-    try {
-        await catchPokemon.save()
-    } catch (err) {
-        console.log(error)
-    }
-    res.json({pokemon: catchPokemon})
+    
 }
 
 exports.getAllPokemon = getAllPokemon
