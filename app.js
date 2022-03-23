@@ -1,6 +1,4 @@
 const express = require('express')
-const https = require('https')
-const axios = require('axios')
 const mongoose = require('mongoose')
 
 const indexRoutes = require('./routes/index-routes')
@@ -22,10 +20,10 @@ app.use((req, res, next) => {
 app.use('/index', indexRoutes)
 app.use('/mine', mineRoutes)
 
-app.use((req, res, next) => {
-    const error = new HttpError('Could not find this route', 404)
-    throw error
-})
+// app.use((req, res, next) => {
+//     const error = new HttpError('Could not find this route', 404)
+//     throw error
+// })
 
 app.use((error, req, res, next) => {
     if(res.headerSent) {

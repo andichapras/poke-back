@@ -6,6 +6,8 @@ const router = express.Router()
 
 router.get('/', indexController.getAllPokemon)
 
-router.post('/:pokeid', indexController.catchPokemon)
+router.get('/detail/:pokeid', indexController.getPokemonDetail)
+
+router.post('/detail/:pokeid', indexController.catchPokemon)
 
 module.exports = router
