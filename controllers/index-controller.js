@@ -49,8 +49,11 @@ const getPokemonDetail = async (req, res, next) => {
                 types.push(t.type.name)
             })
 
+            const pic = response.data.sprites.front_default
+
             pokemon = {
                 "pokemon": pokeId,
+                "picture": pic,
                 "types": types,
                 "moves": moves
             }
