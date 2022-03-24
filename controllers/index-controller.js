@@ -75,14 +75,30 @@ const propCatchPokemon = () => {
 const catchPokemon = async (req, res, next) => {
     const { name } = req.body
     const pokeId = req.params.pokeid
+    let pokemonCatch
 
     const prob = propCatchPokemon()
      if (prob === true) {
-        const catchPokemon = new Pokemon({
-            pokemon: pokeId,
-            name,
-            rename: 0
-        })
+        try {
+            await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeId}`)
+            .then(response => {
+                const pic = response.data.sprites.front_default
+                pokemonCatch = {
+                    pokemon: pokeId,
+                    picture: pic,
+                    name,
+                    rename: 0,
+                    modal: false
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
+        const catchPokemon = new Pokemon(pokemonCatch)
     
         try {
             await catchPokemon.save()
