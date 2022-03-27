@@ -7,7 +7,7 @@ const getAllPokemon = async (req, res, next) => {
     let pokemons = []
 
     try {
-        await axios.get('https://pokeapi.co/api/v2/pokemon/')
+        await axios.get('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=2000')
         .then((response) => {
             
             data = response.data.results

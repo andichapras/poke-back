@@ -10,7 +10,7 @@ const getMyPokemon = async (req, res, next) => {
         console.log(error)
         return next(error)
     }
-    res.json({myPokemon})
+    res.json({myPokemon: myPokemon.map(p => p.toObject({ getters: true }))})
 }
 
 const getMyPokemonDetail = async (req, res, next) => {
@@ -23,7 +23,7 @@ const getMyPokemonDetail = async (req, res, next) => {
         console.log(error)
         return next(error)
     }
-     res.json({ pokemon })
+     res.json({ pokemon: pokemon.toObject({ getters: true }) })
 }
 
 const fiboRename = (x) => {
@@ -64,7 +64,7 @@ const renameMyPokemon = async (req, res, next) =>{
         console.log(error)
         return next(error)
     }
-    res.json({ pokemon })
+    res.json({ pokemon: pokemon.toObject({ getters: true }) })
 }
 
 const probRelease = () => {
